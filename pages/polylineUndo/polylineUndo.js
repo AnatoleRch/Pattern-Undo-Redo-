@@ -26,9 +26,9 @@ class UndoManager {
         this.undoStack = new Stack();//visible
         this.redoStack = new Stack();//invisible
     }
-    execute(AddPolylineCommand){
-        AddPolylineCommand.execute();//rendre visible
-        this.undoStack.push(AddPolylineCommand);//ajouter aux visible
+    execute(command){
+        command.execute();//rendre visible
+        this.undoStack.push(command);//ajouter aux visible
     }
     redo(){
         if (this.canRedo()){
