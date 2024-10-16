@@ -29,6 +29,7 @@ class UndoManager {
     execute(command){
         command.execute();//rendre visible
         this.undoStack.push(command);//ajouter aux visible
+        this.updateButton();
     }
     redo(){
         if (this.canRedo()){
@@ -36,20 +37,25 @@ class UndoManager {
             this.undoStack.push(this.redoStack.peek());//ajouter aux visible
             this.redoStack.pop();//enlever aux invisible
         }
+        this.updateButton();
     }
     undo(){
         if (this.canUndo()){
-
-        this.undoStack.peek().undo()// rendre invisible
-        this.redoStack.push(this.undoStack.peek());//ajouter aux invisible
-        this.undoStack.pop();//enlever aux invisibles
-    }
+            this.undoStack.peek().undo()// rendre invisible
+            this.redoStack.push(this.undoStack.peek());//ajouter aux invisible
+            this.undoStack.pop();//enlever aux invisibles
+        }
+        this.updateButton();
     }
     canUndo(){
         return !this.undoStack.isEmpty(); 
     }
     canRedo(){
         return !this.redoStack.isEmpty(); 
+    }
+    updateButton(){
+        undoButton.disabled=!this.canUndo();
+        redoButton.disabled=!this.canRedo();
     }
 }
 
